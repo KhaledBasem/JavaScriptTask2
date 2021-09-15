@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Login</title>
+        
+        <link href="loginstyle.css" rel="stylesheet" type="text/css" />
+
+        <script type="text/javascript">
+        
+        function login(){
+            
+
+            var username = document.getElementById("txtUsername").value;
+            var password = document.getElementById("txtPassword").value;
+            var show=document.getElementById("showmsg");
+            
+             if (username == null || username == "") {
+
+                show.classList.remove("hideBox");
+                show.classList.add("showBox");
+
+            }
+            if (password == null || password == "") {
+
+             show.classList.remove("hideBox");
+             show.classList.add("showBox");
+
+}
+else{
+    window.location.replace("home.html")
+}
+
+localStorage.setItem("NAME", username);
+
+return false;
+                
+            
+        
+    }
+
+    function closee(v){
+       v= document.getElementById("showmsg").style.display = "none";
+    }
+        
+        
+        </script>
+
+    </head>
+    <body>
+
+        <div class="box">
+            <h2>Login</h2>
+            <form>
+                <div class="inputBox">
+                    <label>Username</label>
+    
+                    <input type="text" id="txtUsername" />
+                </div>
+                <div class="inputBox">
+                    <label>Password</label>
+    
+                    <input type="password" id="txtPassword" />
+                </div>
+                <input type="button" value="Sign In" onclick="login(this)" />
+            </form action="home.html">
+            <div class="hideBox" id="showmsg">
+                <label>Please Enter Username & Password</label>
+                <img src="dd.png" width="20" onclick="closee(this)" />
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <link href="Styles.css" rel="stylesheet" />
+
+        <script type="text/javascript">
+
+        window.addEventListener('load', () => {
+            
+       var user=document.getElementById("username").innerHTML= "Hello"+"  "+localStorage.getItem("NAME");
+              
+    });
+    window.onload = function (){
+            debugger;
+            var myList = document.querySelectorAll('.HeaderMenu li');
+            for (var i = 0; i < myList.length; i++) {
+                myList[i].addEventListener('click', changeBackgroundList);
+            }
+
+        }
+
+        function changeBackgroundList() {
+            var myList = document.querySelectorAll('.HeaderMenu li');
+            for (var i = 0; i < myList.length; i++) {
+                myList[i].removeAttribute('class');
+                myList[i].firstElementChild.removeAttribute('style');
+            }
+            this.setAttribute('class', 'liClick');
+            this.firstElementChild.setAttribute('style', 'color:white');
+        }
+
+    function showShoppingList(val) {
+            
+            var DivShopping = document.getElementById('DivShoppingList');
+            if (val > 0) {
+                DivShopping.setAttribute('class', 'showBox');
+            }
+            else {
+                DivShopping.setAttribute('class', 'hideBox');
+            }
+        }
+    
+
+    function additem(val)
+
+        {
+           
+            
+
+            var parnt = val.parentNode.parentNode.parentNode.parentNode;
+            var disc = parnt.getElementsByTagName("span");
+            var check = document.createElement("input");
+            check.setAttribute("type", "CheckBox");
+
+            var img1 = parnt.getElementsByClassName("mainimgItem")[0].src;
+            var img = document.createElement('img');
+            img.setAttribute('src', img1);
+            img.setAttribute('width', '40px');
+            
+            
+            
+
+            var name = parnt.getElementsByClassName("headerItem")[0].innerHTML;
+            var price = parnt.getElementsByClassName("headerpriceItem")[0].innerHTML;
+
+            var type = parnt.getElementsByClassName("code")[0];
+           
+
+            var value1Name_td = document.createTextNode(name);
+            var value2Price_td = document.createTextNode(price);
+            
+
+            var checkBox = document.createElement("td");
+            var imgtd = document.createElement("td");
+            var nametd = document.createElement("td");
+            var pricetd = document.createElement("td");
+          
+            checkBox.appendChild(check);
+            nametd.appendChild(value1Name_td);
+            pricetd.appendChild(value2Price_td);
+            imgtd.appendChild(img);
+            
+
+            var table = document.getElementById("tableItems");
+
+            var row = document.createElement("tr");
+            row.setAttribute("class", type.value);
+            row.appendChild(checkBox);
+            row.appendChild(imgtd);
+            row.appendChild(nametd);
+            row.appendChild(pricetd);
+            
+           
+            table.appendChild(row);
+
+            showShoppingList(1);
+           
+
+        
+        }
+
+        function checkall(chk) {
+            
+
+            var table = document.getElementById("tableItems");
+            var check = table.getElementsByTagName("input");
+
+        
+            if (chk.checked)
+            {
+
+                for (var x=0; x < check.length; x++) {
+                    check[x].checked = true;
+                }
+            }
+            else
+                for (var x = 0; x < check.length; x++) {
+                    check[x].checked = false;
+
+                }
+
+
+        }
+
+        function deleteitems(){
+            var table = document.getElementById("tableItems");
+            var check = table.getElementsByTagName("input");
+
+            for (var i=0;i<check.length;i++){
+
+            if(check[i].checked==true){
+              var row=check[i].parentNode.parentNode;
+              var t=check[i].parentNode.parentNode.parentNode;
+              t.removeChild(row);
+              i--;
+                        }
+
+            var check1=document.getElementsByTagName("input")[0];           
+                check1.checked=false;               
+
+
+} 
+
+if (table.childElementCount == 0)
+            {
+
+                for (var i = check.length - 1; i >= 0; i--)
+                {
+                    if (check[i].checked == true)
+                    {
+                        var tr = check[i].parentElement.parentElement;
+
+                        table.removeChild(tr);
+                    }
+                }
+                
+                showShoppingList(0);
+            }
+        }
+
+
+        function buy() {
+            var check = document.getElementById("DiscountPart");
+           var x =document.getElementById("chkDiscount");
+           
+           if (x.checked == true) {
+               check.style.display = "block";
+           }
+           else {
+               check.style.display = "none";
+           }
+        }
+
+        function Discount() {
+            
+    
+            var txt= document.getElementById("txtDiscount").value;
+            
+            var text_discount = txt.split(" ")
+
+
+            if (text_discount[0] == "EL") {
+
+                var table = document.getElementById("tableItems");
+                var type = table.getElementsByClassName("EL");
+
+                for (var i = 0; i < type.length; i++) {
+                    var tr=type[i];
+                  var td=tr.lastChild.innerText.split(" ");
+                    var neww_price =td[0]-(td[0] *(text_discount[1]/100));
+                    tr.lastChild.innerText=neww_price;
+
+                
+                }
+               
+
+            }
+            else {
+                if (text_discount[0]== "PR") {
+
+                    var table = document.getElementById("tableItems");
+                    var type = table.getElementsByClassName("PR");
+
+                    for (var i = 0; i < type.length; i++) {
+                    var tr=type[i];
+                    var td=tr.lastChild.innerText.split(" ");
+                    var neww_price =td[0]-(td[0] *(text_discount[1]/100));
+                    tr.lastChild.innerText=neww_price
+
+                
+                }
+
+                   
+                    
+                }
+
+            }
+        }
+
+        function logout(v){
+            v=window.location.replace("Login.html");
+
+        }
+
+
+        </script>
+
+    </head>
+    <body>
+        
+        <div class="header">
+    
+            <div class="logo float-left">
+                <img src="Images/Header/SmallLogo.png" />
+            </div>
+            <div style="float: left; margin-left: 1120px; margin-top: 25px; font-weight: bold;">
+                <span id="username">Hello</span>
+                <img src="Images/Icons/logout.png" onclick="logout(this)" style="margin-left:5px;cursor:pointer"  />
+            </div>
+            <div class="account float-right">
+                <div class="accountSettings">
+                    <div class="ImageCircle">
+                        <img src="Images/Header/ProfilePict.png"  onclick="showShoppingList(0)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        
+        <div id="DivShoppingList" class="showBox" style=" position: absolute; height: 130%; border-right: 2px solid white; background: #333333; width: 270px;">
+            <div style="width: 206px;text-align: center;padding-top: 15px;float: left;">
+                <span style="font-size: 20px; font-weight: bold; font-family: sans-serif; color: white; ">
+                    <input type="checkbox" onclick="checkall(this)"> Shopping List
+                </span>
+            </div>
+            <div style="float: left;margin-top: 10px;">
+                <img src="Images/Icons/delete.png" width="30" id="imgDelete" onclick="deleteitems(this)">
+            </div>
+            <div id="divItemList" style="height: 500px; padding-left: 15px; padding-right: 15px; color: white; margin-top: 10px; padding-left: 15px;">
+                <table id="tableItems" style="padding-left:10px;"></table>
+            </div>
+            <div style="padding-left: 15px;">
+                <div style=" margin-left: 3px; color: white; margin-bottom: 10px;">
+                    <input type="checkbox" id="chkDiscount" onclick="buy()" /> You Have Discount?
+                </div>
+                <div id="DiscountPart" style="display:none;">
+                    <div>
+                        <input type="text" id="txtDiscount" placeholder="Discount Code" style="width: 205px;padding-left: 10px;" />
+                    </div>
+                    <div style="margin-top:10px;color:white;">
+                        <input type="button" class="mybutton" value="Buy" style="width:85%" onclick="Discount(this)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        
+        <div id="HeaderBoxes">
+            <div class="HeaderBoxImage">
+                <img src="Images/Header/Box1.png" />
+            </div>
+            <div class="HeaderBox">
+                <div style="position: absolute; margin-left: 240px;">
+                    <img src="Images/Header/Box2.png" />
+                </div>
+                <div id="HeaderTitle" style="float:left">
+                    <span class="title" style="color: #D30294;">
+                        Dare
+                    </span>
+                    <span class="title">
+                        Academy
+                    </span>
+                </div>
+                <div id="CallUs">
+                    <span style="font-weight:bold" class="contact">
+                        CALL US
+                    </span>
+                    <span style="color: #D30294; margin-left: 7px; font-weight: bold;" class="contact">
+                        06 516 2571
+                    </span>
+                </div>
+            </div>
+        </div>
+    
+       
+        
+        <div class="HeaderMenu">
+            <ul>
+                <li class="liClick">
+                    <a href="#" style="color:white">Home</a>
+                </li>
+                <li ><a href="#">Top Sales</a></li>
+                <li><a href="#">Week Offers</a></li>
+                <li >
+                    <a href="#">Shop By Category</a>
+                    <ul style="display:none;">
+                        <li><a href="#">Fashion</a></li>
+                        <li><a href="#">Cars</a></li>
+                        <li><a href="#">Electronics</a></li>
+                    </ul>
+                </li>
+                <li >
+                    <a href="#">Contact Us</a>
+                </li>
+                <li>
+                    <a href="#">New Items</a>
+                </li>
+            </ul>
+        </div>
+    
+      
+        
+        
+        
+        
+        
+        
+        <div class="SellingArea">
+            <div class="Item" id="ItemNumber">
+                <span class="Electronic"></span>
+                <input type="hidden" value="EL" class="code"/>
+                <img src="Images/Items/Camera_Elec.png" width="130" class="mainimgItem" />
+                <div class="ItemSpec">
+                    <span class="headerItem">Camera Nikon</span>
+                    <span class="itemDetails">
+                        Nikon D850 DSLR Camera with AF-S NIKKOR 24-120mm...
+                    </span>
+    
+                    <div class="PriceSection">
+                        <div style=" padding-top: 5px; float: left;">
+                            <span class="headerpriceItem">300 JD</span>
+                        </div>
+                        <div style="float:left;margin-left:10px">
+                            <img src="Images/Icons/AddtoCart.png" width="30" class="imgAdd" onclick="additem(this)"/>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="Images/Menu/hiddenShadow.png" width="260" />
+                </div>
+            </div>
+    
+    
+    
+            <div class="Item">
+                <span class="Perfume"></span>
+                <input type="hidden" value="PR" class="code"/>
+                <img src="Images/Items/Perfume_Fashion.png" width="90" class="mainimgItem" style="margin-left:55px;" />
+                <div class="ItemSpec">
+                    <div style="position:absolute">
+                        <img src="Images/Menu/hiddenBox.png" width="270" />
+                    </div>
+                    <span class="headerItem">Perfume Fashion</span>
+                    <span class="itemDetails">Luxury Perfume Fashion for women...</span>
+                    <div class="PriceSection">
+                        <div style=" padding-top: 5px; float: left;">
+                            <span class="headerpriceItem">90 JD</span>
+                        </div>
+                        <div style="float:left;margin-left:10px">
+
+                            <img src="Images/Icons/AddtoCart.png" width="30" class="imgAdd"  onclick="additem(this)" />
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="Images/Menu/hiddenShadow.png" width="260" />
+                </div>
+            </div>
+    
+    
+            <div class="Item">
+                <span class="Electronic"></span>
+                <input type="hidden" value="EL" class="code"/>
+                <img src="Images/Items/TV.png" width="140" class="mainimgItem" />
+                <div class="ItemSpec">
+                    <div style="position:absolute">
+                        <img src="Images/Menu/hiddenBox.png" width="217" />
+                    </div>
+                    <span class="headerItem">Samsung TV</span>
+                    <div class="itemDetails">
+                        <span>
+                            Samsung TV LED Curved
+                        </span>
+                    </div>
+                    <div class="PriceSection">
+                        <div style=" padding-top: 5px; float: left;">
+                            <span class="headerpriceItem">500 JD</span>
+                        </div>
+                        <div style="float:left;margin-left:10px">
+                            <img src="Images/Icons/AddtoCart.png" width="30" class="imgAdd"  onclick="additem(this)" />
+                        </div>
+                    </div>
+    
+                </div>
+                <div>
+                    <img src="Images/Menu/hiddenShadow.png" width="260" />
+                </div>
+            </div>
+    
+    
+            <div class="Item">
+                <span class="Perfume"></span>
+                <input type="hidden" value="PR" class="code"/>
+                <img src="Images/Items/Adidas_Perfume.png" width="180" height="120" class="mainimgItem"/>
+                <div class="ItemSpec">
+                    <div style="position:absolute">
+                        <img src="Images/Menu/hiddenBox.png" width="217" />
+                    </div>
+                    <span class="headerItem">Adidas Perfume</span>
+                    <div class="itemDetails">
+                        <span>
+                            Adidas Perfume
+                        </span>
+                    </div>
+                    <div class="PriceSection">
+                        <div style=" padding-top: 5px; float: left;">
+                            <span class="headerpriceItem">70 JD</span>
+                        </div>
+                        <div style="float:left;margin-left:10px">
+                            
+                            <img src="Images/Icons/AddtoCart.png" width="30" class="imgAdd"  onclick="additem(this)"/>
+                        </div>
+                    </div>
+    
+                </div>
+                <div>
+                    <img src="Images/Menu/hiddenShadow.png" width="260" />
+                </div>
+            </div>
+    
+    
+            <div class="Item">
+                <span class="Electronic"></span>
+                <input type="hidden" value="EL" class="code"/>
+                <img src="Images/Items/PS4_Elec.png" width="210" class="mainimgItem" />
+                <div class="ItemSpec">
+                    <div style="position:absolute">
+                        <img src="Images/Menu/hiddenBox.png" width="217" />
+                    </div>
+                    <span class="headerItem">PS4</span>
+                    <div class="itemDetails">
+                        <span>
+                            PlayStation PS4 1TB
+                        </span>
+                    </div>
+                    <div class="PriceSection">
+                        <div style=" padding-top: 5px; float: left;">
+                            <span class="headerpriceItem">120 JD</span>
+                        </div>
+                        <div style="float:left;margin-left:10px">
+                            <img src="Images/Icons/AddtoCart.png" width="30" class="imgAdd"  onclick="additem(this)"/>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="Images/Menu/hiddenShadow.png" width="260" />
+                </div>
+            </div>
+        </div>
+    
+    </body>
+</html>
